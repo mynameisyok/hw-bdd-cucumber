@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.6.6'
+ruby '2.6.10'
 gem 'rails', '4.2.11'
 
 
@@ -32,3 +32,12 @@ group :production do
   gem 'pg', '~> 0.2'
   gem 'rails_12factor'
 end
+
+group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails-training-wheels' # คำสั่งทดสอบพื้นฐานสำหรับ Cucumber scenarios
+  gem 'database_cleaner' # ใช้เพื่อล้างฐานข้อมูลทดสอบของ Cucumber ระหว่างการรัน
+  gem 'capybara'         # ให้ Cucumber ทำงานเสมือนเป็นเบราว์เซอร์
+  gem 'launchy'          # เครื่องมือช่วยในการดีบักเพื่อดูหน้าเว็บที่ Cucumber "เห็น"
+end
+
