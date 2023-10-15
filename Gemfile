@@ -1,13 +1,14 @@
 source 'https://rubygems.org'
 
 ruby '2.6.10'
-gem 'rails', '4.2.11'
+gem 'rails', '5.2'
 
 
 gem 'sass-rails', '~> 5.0.3'
 gem 'uglifier', '>= 2.7.1'
 
 gem 'jquery-rails'
+gem 'dotenv-rails', groups: [:development, :test]
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -16,6 +17,7 @@ end
 
 # for Heroku deployment - as described in Ap. A of ELLS book
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'byebug'
   gem 'database_cleaner'
   gem 'cucumber-rails', require: false
@@ -41,3 +43,7 @@ group :test do
   gem 'launchy'          # เครื่องมือช่วยในการดีบักเพื่อดูหน้าเว็บที่ Cucumber "เห็น"
 end
 
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection", "~> 1.0"

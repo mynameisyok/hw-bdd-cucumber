@@ -22,9 +22,22 @@ class MoviesController < ApplicationController
   end
 
   def create
-    @movie = Movie.create!(movie_params)
-    flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    release_date = DateTime.new(params[:movie]["release_date(1i)"].to_i, params[:movie]["release_date(2i)"].to_i, params[:movie]["release_date(3i)"].to_i)
+    existing_movie = Movie.find_by(title: params[:movie][:title], release_date: release_date)
+    
+    if existing_movie
+      flash[:warning] = "Movie '#{existing_movie.title}' with the same name and release date already exists."
+      redirect_to movies_path and return
+    end
+  
+    @movie = Movie.new(movie_params.merge(release_date: release_date))
+  
+    if @movie.save
+      flash[:notice] = "#{@movie.title} was successfully created."
+      redirect_to movies_path
+    else
+      render 'new'
+    end
   end
 
   def edit
