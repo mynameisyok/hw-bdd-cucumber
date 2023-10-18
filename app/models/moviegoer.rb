@@ -1,6 +1,6 @@
 class Moviegoer < ActiveRecord::Base
-  # has_many :reviews
-  # has_many :movies, :through => :reviews
+  has_many :reviews
+  has_many :movies, :through => :reviews
   # Include default devise modules. Others available are: , :through
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -16,3 +16,8 @@ class Moviegoer < ActiveRecord::Base
       end
   end
 end
+
+# gloria = Moviegoer.where(:name => 'Gloria')
+# gloria_movies = gloria.movies
+# # MAY work, but a bad idea - see caption:
+# gloria.movies << Movie.where(:title => 'Inception') # Don't do this!

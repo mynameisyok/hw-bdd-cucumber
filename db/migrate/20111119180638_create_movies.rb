@@ -11,6 +11,8 @@ class CreateMovies < ActiveRecord::Migration[5.2]
     end
   end
 
+  add_index :movies, [:title], unique: true
+
   def down
     drop_table :movies
   end

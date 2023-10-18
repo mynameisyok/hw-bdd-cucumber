@@ -7,11 +7,6 @@ class DeviseCreateMoviegoers < ActiveRecord::Migration[5.2]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
-      t.string :full_name
-      t.string :uid
-      t.string :avatar_url
-      t.string :provider
-
       ## Recoverable
       t.string   :reset_password_token
       t.date :reset_password_sent_at
@@ -36,11 +31,17 @@ class DeviseCreateMoviegoers < ActiveRecord::Migration[5.2]
       # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
+      t.string :full_name
+      t.string :uid
+      t.string :avatar_url
+      t.string :provider
 
       t.timestamps null: false
     end
 
-    # add_index :moviegoers, :email,                unique: true
-    # add_index :moviegoers, :reset_password_token, unique: true
+    add_index :moviegoers, :email,                unique: true
+    add_index :moviegoers, :reset_password_token, unique: true
+    # add_index :moviegoers, :confirmation_token,   unique: true
+    # add_index :moviegoers, :unlock_token,         unique: true
   end
 end

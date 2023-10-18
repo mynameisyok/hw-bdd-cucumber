@@ -1,5 +1,128 @@
+# Tmdb::Api.key('30ec578b186f5566f29d6df083bd2454')
+Tmdb::Api.key(ENV['APIKEY_TMDB'])
+Tmdb::Api.language("en")
+
 class MoviesController < ApplicationController
   before_action :force_index_redirect, only: [:index]
+
+  # def search_tmdb
+  #   # Check if the title parameter is present
+  #   if params[:search_terms].present?
+  #     # Search for movies with the provided title
+  #     search_results = Tmdb::Movie.find(params[:search_terms])
+  
+  #     if search_results.any?
+  #       # Take the first movie from the search results
+  #       movie = search_results.first
+  
+  #       # Assign movie details to instance variables
+  #       @title = movie.title
+  #       @rating = movie.vote_average.to_s
+  #       @release_date = Date.parse(movie.release_date)
+  #       @description = movie.overview
+  #     else
+  #       # Movie not found, sad path
+  #       flash[:error] = "'#{params[:search_terms]}' was not found in TMDb."
+  #       redirect_to movies_path
+  #     end
+  #   else
+  #     flash[:error] = "Please provide a movie title."
+  #     redirect_to movies_path
+  #   end
+  # end
+
+  def search_tmdb
+    # Check if the title parameter is present
+    if params[:search_terms].present?
+      # Search for movies with the provided title
+      search_results = Tmdb::Movie.find(params[:search_terms])
+  
+      if search_results.any?
+        # Take the first movie from the search results
+        movie = search_results.first
+  
+        # Assign movie details to instance variables
+        @title = movie.title
+        @rating = movie.vote_average.to_s
+        @release_date = Date.parse(movie.release_date)
+        @description = movie.overview
+
+        # เปลี่ยนทางไปที่หน้า /movies/search_tmdb
+        render 'search_tmdb'
+      else
+        # Movie not found, sad path
+        flash[:error] = "'#{params[:search_terms]}' was not found in TMDb."
+        redirect_to movies_path
+      end
+    else
+      flash[:error] = "Please provide a movie title."
+      redirect_to movies_path
+    end
+  end
+  
+  
+
+
+  # def search_tmdb
+  #   @movie_name = params[:movie][:title]
+  #   find_movie = Tmdb::Movie.find(@movie_name)
+  #   if !find_movie.empty?
+  #     # if Movie.find_by(name: @movie_name)
+  #     # movie = find_movie[0]
+  #     # @name = movie.title
+  #     # @date = movie.release_date
+  #     # redirect_to new_movie_path(name:@name,date:@date) 
+  #     # end
+  #     @movie = @movies.first
+  #     redirect_to movie_path(@movie)
+  #   else
+  #     flash[:notice] = "'#{params[:movie][:title]}' was found in TMDb."
+  #     redirect_to root_path
+  #   end
+  # end
+  
+  # def search_tmdb
+  #   @movie_name = params[:movie][:title]
+  #   @movies = Movie.where("title LIKE ?", "%#{@movie_name}%")
+    
+  #   if @movies.present?
+  #     # หากพบข้อมูล
+  #     @movie = @movies.first
+  #     redirect_to movie_path(@movie)
+  #   else
+  #     # หากไม่พบข้อมูล
+  #     flash[:notice] = " '#{@movie_name}' was not found in the database."
+  #     redirect_to movies_path
+  #   end
+  # end
+
+  # def search_tmdb
+  #   Tmdb::Search.movie(params[:search_terms])
+
+  #   # Check if the title parameter is present
+  #   if params[:search_terms].present?
+  #     # Search for movies with the provided title
+  #     search_results = Tmdb::Search.movie(params[:search_terms])
+
+  #     if search_results.any?
+  #       # Take the first movie from the search results
+  #       movie = search_results.first
+
+  #       # Assign movie details to instance variables
+  #       @title = movie.title
+  #       @rating = movie.vote_average.to_s
+  #       @release_date = Date.parse(movie.release_date)
+  #       @description = movie.overview
+  #     else
+  #       # Movie not found, sad path
+  #       flash[:error] = "'#{params[:search_terms]}' was not found in TMDb."
+  #       redirect_to movies_path
+  #     end
+  #   else
+  #     flash[:error] = "Please provide a movie title."
+  #     redirect_to movies_path
+  #   end
+  # end
 
   def show
     id = params[:id] # retrieve movie ID from URI route
@@ -16,13 +139,33 @@ class MoviesController < ApplicationController
     session['ratings'] = ratings_list
     session['sort_by'] = @sort_by
   end
+  # def set_ratings
+  #   @all_ratings = Movie.all_ratings
+  # end
+
+  # def index
+  #   set_ratings
+  #   @search_term = params[:search_term]
+  #   if @search_term.present?
+  #     @movies = Movie.where("title LIKE ?", "%#{@search_term}%")
+  #   else
+  #     @movies = Movie.all
+  #   end
+  # end
 
   def new
-    # default: render 'new' template
+    if params[:movie]
+      @movie = Movie.new(movie_params)
+    end
+    # # default: render 'new' template
+    # @movie_title = params[:name]
+    # @movie_rate = params[:rate] 
+    # @movie_date = params[:date] || Date.today.strftime()
   end
 
   def create
     release_date = DateTime.new(params[:movie]["release_date(1i)"].to_i, params[:movie]["release_date(2i)"].to_i, params[:movie]["release_date(3i)"].to_i)
+    
     existing_movie = Movie.find_by(title: params[:movie][:title], release_date: release_date)
     
     if existing_movie
@@ -39,6 +182,8 @@ class MoviesController < ApplicationController
       render 'new'
     end
   end
+  
+  
 
   def edit
     @movie = Movie.find params[:id]
