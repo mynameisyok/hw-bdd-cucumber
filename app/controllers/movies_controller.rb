@@ -131,21 +131,19 @@ class MoviesController < ApplicationController
     search_results = Tmdb::Movie.find(@movie.title)
 
     if search_results.any?
-    
       @movie_name = search_results.first
       @tmdb_id = @movie_name.id
       @image_url = fetch_movie_images(@tmdb_id)
 
       # กำหนดค่า image_url ในฐานข้อมูล
       @movie.image = @image_url
-
-      # Save the movie object after attaching the image
-      if @movie.save
-        flash[:notice] = "#{@movie.title} was successfully created."
-        redirect_to movies_path
-      else
-        render 'new'
-      end
+    end
+    
+    if @movie.save
+      flash[:notice] = "#{@movie.title} was successfully created."
+      redirect_to movies_path
+    else
+      render 'new'
     end
   end
 
