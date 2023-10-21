@@ -11,6 +11,10 @@ require "rails/all"
 
 Bundler.require(:default, Rails.env)
 
+require 'yaml'
+# YAML::ENGINE.yamler = 'syck'
+
+
 module Rottenpotatoes
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -64,9 +68,6 @@ module Rottenpotatoes
 
     # Fix for Heroku deploy
     config.assets.initialize_on_precompile = false
-
-    # config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :en
 
   end
 end

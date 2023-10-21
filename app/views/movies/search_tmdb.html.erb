@@ -26,8 +26,13 @@
       <%= text_area :movie,:description,value: @description,class: 'form-control', rows: 4,cols:100 %>
     </div>
 
+    <%= "Picture : " %><br/>
+    <img src="<%= @image_url %>" alt="Movie Poster" class="img-fluid" style="max-width: 1000px; max-height: 200px;">
+
+    <br/><br/>
     <%= submit_tag "ADD", class: 'btn btn-primary' %>
     <%= link_to 'Cancel', movies_path, class: 'btn btn-secondary' %>
   <% end %>
 
 </div>
+<br/><br/><br/><br/><br/><br/><br/>

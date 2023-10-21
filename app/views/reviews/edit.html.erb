@@ -1,0 +1,17 @@
+<h1> Edit Review for <%= @movie.title %> </h1>
+
+<%= form_for [@movie, @review], url: movie_review_path(@movie, @review), method: :patch do |f| %>
+
+  <div class="form-group">
+    <%= f.label :potatoes, class: 'col-form-label' %>
+    <%= f.select :potatoes, options_for_select(1..5, @review.potatoes), {}, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :comments, class: 'col-form-label' %>
+    <%= f.text_area :comments, class: 'form-control' %>
+  </div>
+
+  <%= f.submit 'Edit Review', class: 'btn btn-success' %>
+  <%= link_to 'Back', :back, class: 'btn btn-secondary' %>
+<% end %>

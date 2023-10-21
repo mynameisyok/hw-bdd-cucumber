@@ -1,5 +1,6 @@
 Rottenpotatoes::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
+  config.web_console.whitelisted_ips = '127.0.0.1'
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development

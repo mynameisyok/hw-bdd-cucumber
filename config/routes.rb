@@ -5,15 +5,11 @@ Rottenpotatoes::Application.routes.draw do
     registrations: 'moviegoers/registrations'
     }
 
-  # resources :movies do
-  #   resources :reviews
-  # end
-
   resources :movies do
-    resources :reviews, only: [:new, :create]
+    resources :reviews, except: [:index, :show] # ไม่ต้องใส่ [:new, :create] ถ้าคุณไม่ต้องการให้มีหน้าสร้างรีวิว
   end
-
-  resources :reviews, only: [:edit, :update, :destroy]
+  
+  resources :reviews, only: [:new, :create, :edit, :update, :destroy]
 
   resources :moviegoers do
     resources :reviews

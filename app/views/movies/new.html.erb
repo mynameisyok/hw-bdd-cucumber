@@ -2,7 +2,7 @@
 
 <%= form_tag movies_path, class: 'form' do %>
   <%= label :movie, :title, 'Title', class: 'col-form-label' %>
-  <%= text_field :movie, :title, class: 'form-control' , value: @movie_title%>
+  <%= text_field :movie, :title, value: @movie_name, class: 'form-control'%>
   <%= label :movie, :rating, 'Rating', class: 'col-form-label' %>
   <%= select :movie, :rating, ['G','PG','PG-13','R'], {selected:@movie_rate}, {class: 'form-control col-1'} %>
   <%= label :movie, :release_date, 'Released On', class: 'col-form-label' %>

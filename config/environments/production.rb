@@ -1,6 +1,6 @@
 Rottenpotatoes::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-
+  # Tmdb::Api.key(ENV['APIKEY_TMDB'])
   # Code is not reloaded between requests
   config.cache_classes = true
 

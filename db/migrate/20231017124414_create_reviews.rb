@@ -1,3 +1,4 @@
+# Run 'rails generate migration create_reviews'
 class CreateReviews < ActiveRecord::Migration[5.2]
   def change
     create_table 'reviews' do |t|

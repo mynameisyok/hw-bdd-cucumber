@@ -23,7 +23,7 @@ class Moviegoers::OmniauthCallbacksController < Devise::OmniauthCallbacksControl
       redirect_to new_moviegoer_session_path
     end
   end
- 
+  
   private
   def auth
     @auth ||= request.env['omniauth.auth']
